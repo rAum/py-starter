@@ -1,0 +1,5 @@
+{
+    "project_fullname": "Unnamed Project",
+    "__project_name_slug": "{{ cookiecutter.project_fullname | slugify}}",
+    "python_package_name": "{{ cookiecutter.__project_name_slug.replace('-', '_') }}"
+}
