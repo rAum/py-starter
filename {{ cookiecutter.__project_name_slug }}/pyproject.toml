@@ -1,0 +1,129 @@
+[build-system]
+requires = [
+  "setuptools >= 40.9.0",
+  "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+multi_line_output=3
+line_length=120
+include_trailing_comma = true
+known_first_party=[
+  '{{ cookiecutter.python_package_name }}'
+]
+known_third_party=[
+  'cv2',
+  'dotenv',
+  'fastapi',
+  'hydra',
+  'IPython',
+  'loguru',
+  'matplotlib',
+  'numpy',
+  'omegaconf',
+  'pandas',
+  'PIL',
+  'pqdm',
+  'pydantic',
+  'pytest',
+  'pytorch_lightning',
+  'requests',
+  'scipy',
+  'setuptools',
+  'skimage',
+  'sklearn',
+  'torch',
+  'torchvision',
+  'tqdm',
+  'typer',
+]
+skip_gitignore=true
+
+[tool.black]
+line_length=120
+
+[tool.pytest]
+norecursedirs=[
+  '.env',
+  '.git',
+  '.idea',
+  '.tox',
+  '.vscode',
+  'build',
+  'config',
+  'dist',
+  'docker',
+  'migrations',
+  'notebooks',
+]
+python_files = ['test_*.py']
+addopts = [
+  '-ra',
+  '--showlocals',
+  '--strict-markers',
+  '--ignore=.eggs',
+  '--doctest-modules',
+  '--tb=short',
+]
+
+testpaths = ['tests']
+
+[tool.pylint.basic]
+good-names="""i,j,k,x,y,z,b,c,h,w,db,x1,y1,z1,x2,y2,z2,cv,dx,dy,dz,ux,uy,uz,u,v,id,r,g,b,a,u,v"""
+max-args=8
+
+[tool.pylint.main]
+load-plugins=["pylint.extensions.docparams"]
+
+[tool.pylint.messages_control]
+disable=[
+  # lint even if not all imports are present
+  "import-error",
+  # pycln controls below
+  "unused-import",
+  # isort controls below
+  "wrong-import-order",
+  # too restrictive
+  "too-many-instance-attributes",
+  # below makes little sense when code uses dataclasses or pydantic models
+  "too-few-public-methods",
+  # Relaxation of docstring rules
+  "missing-module-docstring",
+  "missing-function-docstring",
+  "missing-class-docstring"
+]
+
+[tool.pylint.format]
+max-line-length=120
+
+[tool.pylint.parameter_documentation]
+default-docstring-type = "google"
+accept-no-param-doc = true
+accept-no-raise-doc = true
+accept-no-return-doc = true
+accept-no-yields-doc = true
+
+[tool.pylint.design]
+max-locals=20
+
+[tool.pylint.similarities]
+min-similarity-lines=10
+
+[tool.pylint.miscellaneous]
+notes=["XXX"]
+
+[tool.mypy]
+warn_unused_configs = true
+ignore_missing_imports = true
+warn_unused_ignores = false
+show_error_codes = true
+check_untyped_defs = true
+no_implicit_optional = true
+mypy_path=['src']
+disable_error_code = ["valid-type"]
+
+[[tool.mypy.overrides]]
+module = "{{ cookiecutter.python_package_name }}.*"
+ignore_missing_imports = false
+disallow_untyped_defs = true
